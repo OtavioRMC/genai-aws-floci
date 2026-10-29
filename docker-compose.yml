@@ -1,0 +1,26 @@
+
+services:
+  floci:
+    image: floci/floci:latest
+    ports:
+      - "4566:4566"
+    environment:
+      FLOCI_HOSTNAME: floci
+      FLOCI_SERVICES_BEDROCK_RUNTIME_BACKEND: proxy
+      FLOCI_SERVICES_BEDROCK_PROXY_URL: http://ollama:11434/v1
+      FLOCI_SERVICES_BEDROCK_RUNTIME_PROXY_DEFAULT_MODEL: llama3.2
+    volumes:
+      - ./data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "1134:11434"
+    volumes:
+      - ollama:/root/.ollama
+
+volumes:
+  ollama:
