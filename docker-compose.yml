@@ -16,6 +16,15 @@ services:
     depends_on:
       - ollama
 
+  floci-ui:
+    image: floci/floci-ui:latest
+    ports:
+        - "4500:4500"
+    environment:
+        - FLOCI_ENDPOINT=http://floci:4566
+    depends_on:
+        - floci
+
   ollama:
     image: ollama/ollama:latest
     ports:
